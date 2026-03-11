@@ -1,0 +1,117 @@
+{
+  "student_metadata": {
+    "name": "Aman Kumar",
+    "roll_number": "230065",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part A",
+    "submission_date": "2026-03-02"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-02",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "purpose": "Filter papers based on strict CORE A* (2009-2012) criteria and SVM/GMM/ARIMA constraints",
+      "prompt": "I need to select a research paper from 2009-2012 published in a CORE A* venue whose primary contribution is based on SVM, GMM, or ARIMA. Can you help me identify candidate papers that satisfy these constraints and are not workshop papers or theses?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Helped me identify 'Dual coordinate descent methods for logistic regression and maximum entropy models' by Yu, Huang, Lin (2011) as a valid candidate that is not on any exclusion list and satisfies the venue and method constraints.",
+      "student_verification": "Verified the venue (Machine Learning journal, Springer) against the CORE 2010 rankings portal. Confirmed the paper is published in 2011 and its primary contribution is a dual coordinate descent method closely related to SVM dual optimisation.",
+      "confidence_level": 5
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-02",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "purpose": "Assess feasibility of reproducing the paper within 7 days on a CPU-only laptop",
+      "prompt": "For the paper 'Dual coordinate descent methods for logistic regression and maximum entropy models' by Yu et al. 2011, is it feasible to reproduce the core contribution on a standard laptop CPU within 7 days? What datasets are used and are they publicly available?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Confirmed that the paper uses publicly available datasets (RCV1, a9a, real-sim from LIBSVM), that the algorithm is implementable in scikit-learn compatible Python, and that experiments are CPU-feasible. This directly influenced my decision to select this paper.",
+      "student_verification": "Verified by checking the LIBSVM dataset page referenced in the paper (Section 6.1). Confirmed that a9a and real-sim are freely downloadable and small enough for CPU execution.",
+      "confidence_level": 5
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-02",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "purpose": "Understand the primary methodological contribution of the paper to confirm it qualifies as an SVM-related method",
+      "prompt": "Is the paper 'Dual coordinate descent methods for logistic regression' by Yu et al. 2011 primarily an SVM paper, an LR paper, or something else? Does its contribution qualify under SVM / kernel methods / variants for the Part A selection criteria?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Clarified that the paper explicitly adapts dual coordinate descent methods from linear SVM (Hsieh et al. 2008) to logistic regression and maximum entropy, making it a direct methodological variant of SVM dual optimisation. This confirmed the paper qualifies under the SVM/variants category.",
+      "student_verification": "Verified against the abstract and Section 1 of the paper: 'Motivated by [SVM dual coordinate descent work], in this paper we study if coordinate descent methods are useful for solving the dual problem of LR.' The connection to SVM dual methods is explicit.",
+      "confidence_level": 5
+    },
+    {
+      "interaction_id": 4,
+      "date": "2026-03-02",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "purpose": "Understand potential failure cases and limitations of the method before committing to the paper",
+      "prompt": "What are the main failure cases or limitations of the dual coordinate descent method for logistic regression in Yu et al. 2011? When would CDdual perform worse than primal methods?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Identified that CDdual underperforms on datasets where n (features) << l (instances), such as the a9a dataset discussed in Section 6.1. This helped me anticipate the limitations I would need to address in Parts B and C.",
+      "student_verification": "Verified against Section 6.1 of the paper which explicitly states CDdual is slower on a9a (123 features, 32k instances) and recommends primal methods for such cases.",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 5,
+      "date": "2026-03-02",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "purpose": "Confirm the paper's venue qualifies as CORE A* for 2009-2012",
+      "prompt": "Does the journal 'Machine Learning' published by Springer qualify as CORE A* for the 2009-2012 period? How do I verify this on the CORE portal?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Guided me to check the CORE 2010 rankings at portal.core.edu.au and confirmed that the Machine Learning journal (JMLR and ML-Springer are both listed) is a CORE A* venue for the relevant period.",
+      "student_verification": "Manually verified on the CORE portal using the URL provided in the Part A instructions. Machine Learning (Springer) appears in the CORE2010 rankings as an A* journal.",
+      "confidence_level": 4
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 2,
+      "prompt": "For the paper by Yu et al. 2011, is it feasible to reproduce the core contribution on a standard laptop CPU within 7 days? What datasets are used and are they publicly available?",
+      "why_important": "Feasibility was the most critical decision factor. This prompt directly determined whether I could safely commit to this paper for the entire exam."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 3,
+      "prompt": "Is the paper 'Dual coordinate descent methods for logistic regression' primarily an SVM paper? Does its contribution qualify under SVM / kernel methods / variants?",
+      "why_important": "Confirming methodological alignment with the allowed categories was essential before submitting — a wrong classification would disqualify the paper."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 1,
+      "prompt": "I need to select a research paper from 2009-2012 published in a CORE A* venue whose primary contribution is based on SVM, GMM, or ARIMA. Can you help me identify candidate papers?",
+      "why_important": "This was the initial filtering step that identified the paper in the first place."
+    },
+    {
+      "rank": 4,
+      "interaction_id": 4,
+      "prompt": "What are the main failure cases or limitations of the dual coordinate descent method in Yu et al. 2011? When would CDdual perform worse than primal methods?",
+      "why_important": "Understanding failure cases before selecting the paper helped me prepare for Parts B and C and avoid surprises during reproduction."
+    },
+    {
+      "rank": 5,
+      "interaction_id": 5,
+      "prompt": "Does the journal 'Machine Learning' published by Springer qualify as CORE A* for the 2009-2012 period?",
+      "why_important": "Venue verification is worth 5 marks in Part A and was a necessary confirmation step before final submission."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part A.",
+    "understanding_acknowledged": true,
+    "signature": "Aman Kumar",
+    "date": "2026-03-02"
+  }
+}

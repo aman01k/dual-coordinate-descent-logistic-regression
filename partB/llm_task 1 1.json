@@ -1,0 +1,87 @@
+{
+  "student_metadata": {
+    "name": "Aman Kumar",
+    "roll_number": "230065",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B - Task 1.1",
+    "submission_date": "2026-03-11"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-11",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "task_tag": "Task 1.1",
+      "purpose": "Understanding the step-by-step flow of Algorithm 5 and how the dual problem connects to the primal",
+      "prompt": "In the paper 'Dual Coordinate Descent Methods for Logistic Regression' by Yu et al. 2011, can you walk me through how Algorithm 5 works step by step, specifically how the maintenance of w(alpha) reduces the per-iteration cost from O(nl) to O(n)?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Clarified the role of the w(alpha) vector as a bridge between dual updates and primal computation. Helped me articulate Step 4 in the method description.",
+      "student_verification": "Verified against Equations (22)-(24) and Table 1 in the paper. The O(n) cost claim for constructing the sub-problem is explicitly stated in Table 1.",
+      "confidence_level": 5,
+      "code_used_verbatim": false
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-11",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "task_tag": "Task 1.1",
+      "purpose": "Understanding why the sub-problem (Eq.18) differs from the SVM dual sub-problem (Eq.9)",
+      "prompt": "What is fundamentally different about the sub-problem in logistic regression dual (Eq.18 in Yu et al. 2011) vs the SVM dual sub-problem (Eq.9)? Why does this difference matter for the algorithm design?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Helped articulate that the log terms in the LR sub-problem prevent a closed-form solution, which is why Algorithm 4 is needed. This became the core of Step 5 in my method description.",
+      "student_verification": "Cross-checked with Section 3.1 of the paper where this is explicitly discussed: 'Another important difference from SVM is that the sub-problem no longer has a closed-form solution.'",
+      "confidence_level": 5,
+      "code_used_verbatim": false
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-11",
+      "tool_name": "Claude",
+      "model": "claude-sonnet-4-6",
+      "task_tag": "Task 1.1",
+      "purpose": "Understanding the purpose of the numerical reformulation in Section 3.3",
+      "prompt": "In Yu et al. 2011, Section 3.3, they introduce g1(Z1) and g2(Z2) reformulations. What is catastrophic cancellation and how does this reformulation avoid it?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Gave me the intuition for why Z1 = c1 + z avoids the cancellation when z approaches -c1. I used this to write Step 6 in the method description.",
+      "student_verification": "Verified against Section 3.3 of the paper which states: 'if z ~ -c1, the relative numerical error of calculating c1+z can be large.' The reformulation to Z1 = c1+z ensures the problematic term stays away from zero.",
+      "confidence_level": 4,
+      "code_used_verbatim": false
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 1,
+      "prompt": "In the paper, can you walk me through how Algorithm 5 works step by step, specifically how the maintenance of w(alpha) reduces the per-iteration cost from O(nl) to O(n)?",
+      "why_important": "This was the most fundamental question for understanding the paper's key efficiency contribution — the w(alpha) maintenance trick that makes CDdual competitive with SVM solvers."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 2,
+      "prompt": "What is fundamentally different about the sub-problem in logistic regression dual vs the SVM dual sub-problem?",
+      "why_important": "Understanding this difference is essential for appreciating why Algorithm 4 is needed at all and why the paper is non-trivial."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "What is catastrophic cancellation and how does the reformulation avoid it?",
+      "why_important": "The numerical reformulation is a key technical contribution, and understanding it required clarification of the floating-point arithmetic concepts."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Task 1.1.",
+    "understanding_acknowledged": true,
+    "signature": "Aman Kumar",
+    "date": "2026-03-11"
+  }
+}
