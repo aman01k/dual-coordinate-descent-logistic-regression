@@ -91,29 +91,29 @@ CDdual converged in **39 iterations**, matching the sklearn L-BFGS baseline exac
 <table>
   <tr>
     <td align="center">
-      <img src="results/convergence.png" width="300"/>
+      <img src="src/results/convergence.png" width="300"/>
       <br><sub>Primal Objective Convergence</sub>
     </td>
     <td align="center">
-      <img src="results/comparison.png" width="300"/>
+      <img src="src/results/comparison.png" width="300"/>
       <br><sub>CDdual vs L-BFGS Accuracy</sub>
     </td>
     <td align="center">
-      <img src="results/alpha_distribution.png" width="300"/>
+      <img src="src/results/alpha_distribution.png" width="300"/>
       <br><sub>Dual Variable Distribution</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="results/ablation_newton_vs_linesearch.png" width="300"/>
+      <img src="src/results/ablation_newton_vs_linesearch.png" width="300"/>
       <br><sub>Ablation: Newton vs Line Search</sub>
     </td>
     <td align="center">
-      <img src="results/ablation_random_vs_sequential.png" width="300"/>
+      <img src="src/results/ablation_random_vs_sequential.png" width="300"/>
       <br><sub>Ablation: Random vs Sequential</sub>
     </td>
     <td align="center">
-      <img src="results/failure_mode_large_C.png" width="300"/>
+      <img src="src/results/failure_mode_large_C.png" width="300"/>
       <br><sub>Failure Mode: Large C Analysis</sub>
     </td>
   </tr>
