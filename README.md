@@ -1,91 +1,134 @@
-# Advanced Machine Learning
-### Rishihood University, NST — 3rd Year, Semester 6
+# Dual Coordinate Descent for Logistic Regression
 
-**Student:** Aman Kumar  
-**Roll Number:** 230065  
-**Course:** Advanced Machine Learning  
+A from-scratch Python reproduction of the paper:
+
+> **Dual Coordinate Descent Methods for Logistic Regression and Maximum Entropy Models**
+
+> Authors: Hsiang-Fu Yu, Fang-Lan Huang, Chih-Jen Lin
+
+> *Machine Learning (Springer)*, Vol. 85, pp. 41–75, 2011
+
+> DOI: [10.1007/s10994-010-5221-8](https://doi.org/10.1007/s10994-010-5221-8)
+
+This project implements the core algorithms from the paper, reproduces the key results, and includes ablation studies and failure mode analysis.
+
+---
+
+## Overview
+
+The paper applies coordinate descent to the dual form of logistic regression and maximum entropy models — a methodological extension of SVM dual optimisation. This repository implements:
+
+- **Algorithm 5 (CDdual)** — the core dual coordinate descent solver
+- **Algorithm 4** — the modified Newton sub-problem solver used inside CDdual
+
+Both are implemented entirely from scratch in Python without using any existing logistic regression solvers.
 
 ---
 
-## Selected Paper
-
-**Title:** Dual Coordinate Descent Methods for Logistic Regression and Maximum Entropy Models  
-**Authors:** Hsiang-Fu Yu, Fang-Lan Huang, Chih-Jen Lin  
-**Venue:** Machine Learning (Springer), Vol. 85, pp. 41–75, 2011  
-**DOI:** 10.1007/s10994-010-5221-8  
-**CORE Rank:** A*  
-
----
 
 ## Repository Structure
 
 ```
-├── llm_usage_partA.json        # LLM usage disclosure for Part A
-├── README.md                   # This file
+├── README.md
+├── requirements.txt
 │
-└── partB/
-    ├── task 1 1.ipynb          # Q1: Core Contribution / Architecture
-    ├── task 1 2.ipynb          # Q1: Key Assumptions
-    ├── task 1 3.ipynb          # Q1: What the Paper Claims to Improve
-    ├── task 2 1.ipynb          # Q2: Dataset Selection and Setup
-    ├── task 2 2.ipynb          # Q2: Reproduction of Core Contribution
-    ├── task 2 3.ipynb          # Q2: Result, Comparison & Reproducibility Checklist
-    ├── task 3 1.ipynb          # Q3: Two-Component Ablation Study
-    ├── task 3 2.ipynb          # Q3: Failure Mode Analysis
-    ├── report.pdf              # Final 4-page report synthesising all findings
-    ├── requirements.txt        # Python dependencies with version numbers
-    ├── llm_task_1_1.json       # LLM disclosure for Task 1.1
-    ├── llm_task_1_2.json       # LLM disclosure for Task 1.2
-    ├── llm_task_1_3.json       # LLM disclosure for Task 1.3
-    ├── llm_task_2_1.json       # LLM disclosure for Task 2.1
-    ├── llm_task_2_2.json       # LLM disclosure for Task 2.2
-    ├── llm_task_2_3.json       # LLM disclosure for Task 2.3
-    ├── llm_task_3_1.json       # LLM disclosure for Task 3.1
-    ├── llm_task_3_2.json       # LLM disclosure for Task 3.2
-    ├── llm_task_4_1.json       # LLM disclosure for Task 4.1
-    ├── llm_task_4_2.json       # LLM disclosure for Task 4.2
-    ├── results/
-    │   ├── task2_convergence.png       # Primal objective convergence + dual variable distribution
-    │   ├── task2_comparison.png        # CDdual vs L-BFGS accuracy comparison
-    │   ├── task2_alpha_dist.png        # Alpha distribution plot
-    │   ├── task3_ablation1.png         # Ablation 1: Full Newton vs Line Search
-    │   ├── task3_ablation2.png         # Ablation 2: Random Permutation vs Sequential
-    │   └── task3_failure_mode.png      # Failure mode: large C analysis
-    └── data/
-        ├── README.md                   # Dataset documentation
-        ├── X_train.npy                 # Training features (standardised)
-        ├── X_test.npy                  # Test features (standardised)
-        ├── y_train.npy                 # Training labels {-1, +1}
-        └── y_test.npy                  # Test labels {-1, +1}
+├── src/
+│   ├── 01_core_contribution.ipynb       # Architecture and core methodology
+│   ├── 02_key_assumptions.ipynb         # Analysis of paper's assumptions
+│   ├── 03_claimed_improvements.ipynb    # What the paper improves over baselines
+│   ├── 04_dataset_setup.ipynb           # Dataset selection and preprocessing
+│   ├── 05_reproduction.ipynb            # Reproduction of core results
+│   ├── 06_results_comparison.ipynb      # CDdual vs L-BFGS comparison
+│   ├── 07_ablation_study.ipynb          # Two-component ablation study
+│   └── 08_failure_mode_analysis.ipynb   # Failure mode under large C
+│
+├── results/
+│   ├── convergence.png                  # Primal objective convergence
+│   ├── comparison.png                   # CDdual vs L-BFGS accuracy
+│   ├── alpha_distribution.png           # Dual variable distribution
+│   ├── ablation_newton_vs_linesearch.png
+│   ├── ablation_random_vs_sequential.png
+│   └── failure_mode_large_C.png
+│
+└── data/
+├── README.md
+├── X_train.npy
+├── X_test.npy
+├── y_train.npy
+└── y_test.npy
 ```
+---
+
+## Dataset
+
+**Breast Cancer Wisconsin (Diagnostic)**
+- 569 instances, 30 features, binary classification
+- Loaded directly via `sklearn.datasets.load_breast_cancer()`
+- No manual download required
 
 ---
 
-## Part A Summary
+## Results
 
-The selected paper applies coordinate descent to the **dual form** of logistic regression and maximum entropy models — a direct methodological extension of SVM dual optimisation (Hsieh et al., 2008). The paper qualifies under the SVM/variants category and is published in the Machine Learning journal (Springer), a CORE A* venue.
+### Reproduction
 
----
+| Method | Train Accuracy | Test Accuracy | Iterations |
+|---|---|---|---|
+| CDdual (ours) | 98.68% | 98.25% | 39 |
+| sklearn L-BFGS (baseline) | 98.68% | 98.25% | — |
 
-## Part B Summary
+CDdual converged in **39 iterations**, matching the sklearn L-BFGS baseline exactly.
 
-### Dataset
-**Breast Cancer Wisconsin (Diagnostic)** — 569 instances, 30 features, binary classification. Loaded directly from `sklearn.datasets.load_breast_cancer()`. No manual download required.
+### Convergence & Accuracy
 
-### Reproduction (Question 2)
-Implemented **Algorithm 5** (CDdual) and **Algorithm 4** (modified Newton sub-problem solver) from scratch in Python. Key results:
-- CDdual converged in **39 iterations**
-- Train accuracy: **98.68%** — identical to sklearn L-BFGS baseline
-- Test accuracy: **98.25%**
+| Method | Train Accuracy | Test Accuracy | Iterations |
+|---|---|---|---|
+| CDdual (ours) | 98.68% | 98.25% | 39 |
+| sklearn L-BFGS (baseline) | 98.68% | 98.25% | — |
 
-### Ablation Study (Question 3)
-| Component Ablated | Finding |
+### Plots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="results/convergence.png" width="300"/>
+      <br><sub>Primal Objective Convergence</sub>
+    </td>
+    <td align="center">
+      <img src="results/comparison.png" width="300"/>
+      <br><sub>CDdual vs L-BFGS Accuracy</sub>
+    </td>
+    <td align="center">
+      <img src="results/alpha_distribution.png" width="300"/>
+      <br><sub>Dual Variable Distribution</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="results/ablation_newton_vs_linesearch.png" width="300"/>
+      <br><sub>Ablation: Newton vs Line Search</sub>
+    </td>
+    <td align="center">
+      <img src="results/ablation_random_vs_sequential.png" width="300"/>
+      <br><sub>Ablation: Random vs Sequential</sub>
+    </td>
+    <td align="center">
+      <img src="results/failure_mode_large_C.png" width="300"/>
+      <br><sub>Failure Mode: Large C Analysis</sub>
+    </td>
+  </tr>
+</table>
+
+### Ablation Study
+
+| Component Ablated | Effect |
 |---|---|
-| Algorithm 4 → CDdual-ls (line search) | Same accuracy, but **2.3× slower** wall-clock time |
-| Random permutation → Sequential order | Same accuracy, but **4.2× more iterations** (39 → 164) |
+| Algorithm 4 → Line Search (CDdual-ls) | Same accuracy, **2.3× slower** wall-clock time |
+| Random Permutation → Sequential Order | Same accuracy, **4.2× more iterations** (39 → 164) |
 
-### Failure Mode (Question 3.2)
-CDdual fails to converge within 500 iterations when **C ≥ 100**, with test accuracy dropping from 98.25% to 91–93%. Directly linked to Assumption 1 (interior optimum near boundary) and the catastrophic cancellation issues described in Section 3.3 of the paper.
+### Failure Mode
+
+CDdual fails to converge within 500 iterations when **C ≥ 100**, with test accuracy dropping from 98.25% to 91–93%. This is directly linked to Assumption 1 in the paper (interior optimum near boundary) and the catastrophic cancellation issues described in Section 3.3.
 
 ---
 
@@ -93,17 +136,25 @@ CDdual fails to converge within 500 iterations when **C ≥ 100**, with test acc
 
 ```bash
 # Install dependencies
-pip install -r partB/requirements.txt
+pip install -r requirements.txt
 
 # Open any notebook in Jupyter or VS Code and run all cells
-# All notebooks are self-contained and load data programmatically
 ```
 
-**No GPU required. All experiments run on CPU.**  
-**No manual dataset downloads required.**
+- No GPU required — all experiments run on CPU
+- No manual dataset downloads required
+- All notebooks are self-contained
 
 ---
 
-## LLM Usage Disclosure
+## Key Findings
 
-LLM tools (Claude, Anthropic) were used for reading comprehension, concept clarification, and writing assistance. Full disclosure is provided in the JSON files at the root level (`llm_usage_partA.json`) and within `partB/` for each task (`llm_task_*.json`). All final content was independently verified against the paper and rewritten in the student's own words.
+- CDdual is as accurate as L-BFGS while being competitive in convergence speed on moderate-sized datasets
+- Random permutation of coordinates is critical — sequential order degrades convergence by 4.2×
+- The algorithm breaks down under large regularisation parameter C, consistent with the theoretical assumptions in the paper
+
+---
+
+## Reference
+
+Yu, H.-F., Huang, F.-L., & Lin, C.-J. (2011). Dual coordinate descent methods for logistic regression and maximum entropy models. *Machine Learning*, 85, 41–75. https://doi.org/10.1007/s10994-010-5221-8
