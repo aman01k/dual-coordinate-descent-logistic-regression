@@ -1,4 +1,4 @@
-# Advanced Machine Learning — Mid-Semester Examination
+# Advanced Machine Learning
 ### Rishihood University, NST — 3rd Year, Semester 6
 
 **Student:** Aman Kumar  
